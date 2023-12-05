@@ -3,6 +3,7 @@ package pg
 import (
 	"context"
 	"fmt"
+	"github.com/jackc/pgx/v4"
 	"github.com/nazip/platform_common/pkg/db"
 	"github.com/nazip/platform_common/pkg/db/prettier"
 	"log"
