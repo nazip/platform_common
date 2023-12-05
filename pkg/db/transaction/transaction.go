@@ -2,6 +2,7 @@ package transaction
 
 import (
 	"context"
+	"github.com/jackc/pgx/v4"
 	"github.com/nazip/platform_common/pkg/db"
 	"github.com/nazip/platform_common/pkg/db/pg"
 
