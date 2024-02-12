@@ -2,6 +2,7 @@ package pg
 
 import (
 	"context"
+
 	"github.com/nazip/platform_common/pkg/db"
 
 	"github.com/jackc/pgx/v4/pgxpool"
@@ -23,13 +24,14 @@ func (c *pgClient) Close() error {
 
 	return nil
 }
-func New(ctx context.Context, dsn string, stage string) (db.Client, error) {
+
+func New(ctx context.Context, dsn string) (db.Client, error) {
 	dbc, err := pgxpool.Connect(ctx, dsn)
 	if err != nil {
 		return nil, errors.Errorf("failed to connect to db: %v", err)
 	}
 
 	return &pgClient{
-		masterDBC: &pg{dbc, stage},
+		masterDBC: &pg{dbc},
 	}, nil
 }

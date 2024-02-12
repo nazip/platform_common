@@ -2,11 +2,11 @@ package pg
 
 import (
 	"context"
-	"fmt"
+
 	"github.com/jackc/pgx/v4"
 	"github.com/nazip/platform_common/pkg/db"
-	"github.com/nazip/platform_common/pkg/db/prettier"
-	"log"
+
+	// "github.com/nazip/platform_common/pkg/db/prettier"
 
 	"github.com/georgysavva/scany/pgxscan"
 	"github.com/jackc/pgconn"
@@ -16,19 +16,16 @@ import (
 type key string
 
 const (
-	TxKey      key = "tx"
-	production     = "prod"
+	TxKey key = "tx"
 )
 
 type pg struct {
-	dbc   *pgxpool.Pool
-	stage string
+	dbc *pgxpool.Pool
 }
 
-func NewDB(dbc *pgxpool.Pool, stage string) db.DB {
+func NewDB(dbc *pgxpool.Pool) db.DB {
 	return &pg{
-		dbc:   dbc,
-		stage: stage,
+		dbc: dbc,
 	}
 }
 
@@ -104,12 +101,10 @@ func MakeContextTx(ctx context.Context, tx pgx.Tx) context.Context {
 }
 
 func (p *pg) logQuery(ctx context.Context, q db.Query, args ...interface{}) {
-	if p.stage != production {
-		prettyQuery := prettier.Pretty(q.QueryRaw, prettier.PlaceholderDollar, args...)
-		log.Println(
-			ctx,
-			fmt.Sprintf("sql: %s", q.Name),
-			fmt.Sprintf("query: %s", prettyQuery),
-		)
-	}
+	// prettyQuery := prettier.Pretty(q.QueryRaw, prettier.PlaceholderDollar, args...)
+	// log.Println(
+	// 	ctx,
+	// 	fmt.Sprintf("sql: %s", q.Name),
+	// 	fmt.Sprintf("query: %s", prettyQuery),
+	// )
 }
